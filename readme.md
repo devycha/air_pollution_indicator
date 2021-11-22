@@ -39,6 +39,15 @@ import requests
 2. API_KEY
 ```python
 API_KEY = "발급받은 API_KEY"
+params = {
+    'serviceKey' : API_KEY,
+    'serviceKey' : '발급받은 API_KEY', 
+    'returnType' : 'json',
+    'numOfRows' : '100',
+    'pageNo' : '1',
+    'sidoName': '경기',
+    'ver': '1.0'
+}
 ```
 3. Request URL
 ```python
