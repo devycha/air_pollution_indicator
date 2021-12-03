@@ -19,6 +19,10 @@ def wait_msg():
     cleanup()
     mylcd.lcd_display_string('Please wait for updating data')
 
+def maintain_msg():
+    cleanup()
+    mylcd.lcd_display_string('The equipment is under inspection for a while')
+
 cleanup()
 #Test1
 # while True:
