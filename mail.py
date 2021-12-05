@@ -1,34 +1,24 @@
-import smtplib, os, pickle
-from email import encoders
-from email.mime.text import MIMEText as text
-from email.mime.multipart import MIMEMultipart as send_email
-from email.mime.base import MIMEBase
+import smtplib
+from email.mime.text import MIMEText
 
-# address = ["y2kdj9723@naver.com"]
-# pw = "123"
+def send_mail(message):
+    s = smtplib.SMTP('smtp.gmail.com', 587)
 
-# smtp = smtplib.SMTP('smtp.gmail.com', 587)
-# smtp.ehlo()
-# smtp.starttls()
-# smtp.login('y2kdj9723@naver.com', "123")
+    s.starttls()
+    s.login('보내는메일', '지메일 앱 비밀번호')
 
-# msg = send_email()
-# msg['Subject'] = '미세먼지 주의 메일'
+    msg = MIMEText('[미세먼지 정보]' +\
+                         "\n\n    미세먼지 등급 : " + (message['pm10_data']['grade']) + \
+                         "\n    미세먼지 농도 : " + (message['pm10_data']['value']) + \
+                         "\n\n    초미세먼지 등급 : " + (message['pm25_data']['grade']) + \
+                         "\n    초미세먼지 농도 : " + (message['pm25_data']['value']) + \
+                         "\n\n    일산화탄소 등급 : " + (message['co_data']['grade']) + \
+                         "\n    일산화탄소 등급 : " + (message['co_data']['value']) + \
+                         "\n\n    오존 등급 : " + (message['o3_data']['grade']) + \
+                         "\n    오존 등급 : " + (message['o3_data']['value'])
+                             )
+    msg['Subject'] = '미세먼지 주의 메일'
 
-# part = text('미세먼지 등급이 매우 나쁨입니다')
-# msg.attach(part)
+    s.sendmail("보내는메일", "받는메일", msg.as_string())
 
-# msg["To"] = address
-# smtp.sendmail('y2kdj9723@naver.com', address, msg.as_string())
-
-import datetime
-import time
-
-while True:
-    now = datetime.datetime.now()
-    minute = str(now.minute)
-    second = str(now.second)
-    
-    if (second == "30"):
-        print(minute, "분", second, "초")
-        time.sleep(1)
+    s.quit()

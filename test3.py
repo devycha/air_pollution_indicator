@@ -1,6 +1,7 @@
 from air_pollution import pm_value as pm
 from lcd import msg, cleanup, error_msg, maintain_msg
 from led import normal_led, maintain_led, error_led, turnOff, pm_led
+from mail import send_mail
 import time
 import RPi.GPIO as GPIO
 import datetime
@@ -74,7 +75,9 @@ try:
                 maintain_led()
             if (minute == "00" and second == "00"):
                     pm_data = pm()
+                    send_mail(pm_data)
                     pm10(0)
+                    
             
         except:
             error_msg()
