@@ -1,28 +1,35 @@
 import I2C_LCD_driver
 import time
 
+# LCD Display를 제어할 수 있는 i2c bus (오픈소스 이용)
 mylcd = I2C_LCD_driver.lcd()
 
+# 미세먼지 정보를 파라미터로 입력받아 LCD에 표시
 def msg(title, grade, value):
     mylcd.lcd_display_string(title)
     mylcd.lcd_display_string("Grade: " + grade, 2, 3)
     mylcd.lcd_display_string("Value: " + value, 3, 3)
-    
+
+# LCD Display의 글자를 모두 지움    
 def cleanup():
     mylcd.lcd_clear()
 
+# LCD Display에 알 수 없는 오류라는 정보를 표시
 def error_msg():
     cleanup()
     mylcd.lcd_display_string('Unexpected Error is Occurred')
 
+# LCD Display에 정보가 업데이트 중임을 표시
 def wait_msg():
     cleanup()
     mylcd.lcd_display_string('Please wait for updating data')
 
+# LCD Display에 기기가 점검 중임을 표시
 def maintain_msg():
     cleanup()
     mylcd.lcd_display_string('The equipment is under inspection for a while')
 
+# 모듈을 main에서 불러올 때 글자를 모두 지우고 시작
 cleanup()
 #Test1
 # while True:

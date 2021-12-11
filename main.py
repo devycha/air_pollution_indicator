@@ -1,21 +1,24 @@
-from air_pollution import pm_value as pm
-from lcd import msg, cleanup, error_msg, wait_msg
-import led2 as led
-import time
-import RPi.GPIO as GPIO
+from air_pollution import pm_value as pm # 공공데이터 포털 한국환경공단 에어코리아의 실시간 미세먼지 정보 데이터 추출 API
+from lcd import msg, cleanup, error_msg, wait_msg # 미세먼지 정보를 표시하는 LCD Display
+import led as led # 정상 작동 여부와 미세먼지 정보를 표시하는 LED 제어
+import time # 1시간마다 update를 하기 위한 time 모듈
+import RPi.GPIO as GPIO # 라즈베리파이의 GPIO를 제어하기 위한 모듈
 
+# 라즈베리파이 GPIO 셋 모드
 GPIO.setmode(GPIO.BCM)
+
+# 1번 버튼 GPIO.input(13)
+# 2번 버튼 GPIO.input(6)
+# 3번 버튼 GPIO.input(26)
+# 4번 버튼 GPIO.input(19)
 ROW = [6, 13, 19, 26]
-# pin_1 = GPIO.input(13)
-# pin_2 = GPIO.input(6)
-# pin_3 = GPIO.input(26)
-# pin_4 = GPIO.input(19)
+
+# 버튼을 INPUT값으로 설정 버튼을 눌렀다 떼었을 때 값이 변경되도록 1번~4번 버튼 모두 설정
 for i in range(4):
     GPIO.setup(ROW[i], GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 
-# while True:
-#     # 초기화버튼 입력시 데이터 받아오기
+
 while True:
     try:
         pm_data = pm3()
